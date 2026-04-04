@@ -10,7 +10,7 @@ Requirements
 Description
 --
 
-This script burns separate .wav tracks from a chosen directory (alphabetically sorted) using *cdrdao* onto an Audio CD with optional CD-TEXT. For CD-TEXT information should be defined in a plain-text file which looks like this:
+This script burns separate .wav tracks from a chosen directory (alphabetically sorted) using *cdrdao* onto an Audio CD with optional CD-TEXT. CD-TEXT information should be defined in a plain-text file which looks like this:
 
 ```
   Performer Name
