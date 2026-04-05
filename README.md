@@ -10,7 +10,9 @@ Requirements
 Description
 --
 
-This script burns separate .wav tracks from a chosen directory (alphabetically sorted) using *cdrdao* onto an Audio CD with optional CD-TEXT. CD-TEXT information should be defined in a plain-text file which looks like this:
+This script burns separate .wav tracks from a chosen directory (alphabetically sorted) using *cdrdao* onto an Audio CD with optional CD-TEXT and pregaps. It is intended to be used as a very easy-to-use CLI replacement for Brasero.
+
+CD-TEXT information should be defined in a plain-text file which looks like this:
 
 ```
   Performer Name
@@ -19,5 +21,7 @@ This script burns separate .wav tracks from a chosen directory (alphabetically s
   Track Name
   Track Name
 ```
+
+There are some options, such as saving the generated CUE file for manual editing (run with *-h* for details).
 
 By default it burns using the lowest possible speed. There are some options at the beginning of the script which can be edited.
