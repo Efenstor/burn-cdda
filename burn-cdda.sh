@@ -55,7 +55,7 @@ dir:
   directory with .wav files or a CUE sheet file.
 
 cd-text:
-  either a plain-text file of the format:
+  Plain-text file of the format:
   
     Performer Name
     Album Title
