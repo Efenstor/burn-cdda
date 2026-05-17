@@ -1,15 +1,17 @@
 #!/bin/sh
 # Copyleft 2026 Efenstor
-# revision 2026.04-2
+# revision 2026.05-1
 
 # OPTIONS
 drive=/dev/sr0  # CD drive to use
 fpregap=2       # Default pregap before the first track
 opregap=0       # Default pregap before other tracks
-cdrdao_opts="--eject --speed 0"
+cdrdao_opts="--eject --speed 1"
+
+tmpcue=
 
 cleanup() {
-  if [ ! "$savecue" ] && [ -f "$cue" ]; then
+  if [ "$tmpcue" ] && [ -f "$cue" ]; then
     rm "$cue"
   fi
 }
@@ -18,7 +20,7 @@ cleanup() {
 trap_func() {
   cleanup
   exit 1
-}          
+}
 
 # Parse the named parameters
 optstr="?hf:p:s:"
@@ -34,7 +36,7 @@ while getopts $optstr opt; do
 done
 
 # Parse the unnamed parameters
-shift $((OPTIND - 1))    
+shift $((OPTIND - 1))
 
 # Help
 if [ $# -lt 1 ]; then
@@ -55,11 +57,11 @@ dir:
   directory with .wav files or a CUE sheet file.
 
 cd-text:
-  Plain-text file of the format:
-  
+  either a plain-text file of the format:
+
     Performer Name
     Album Title
-  
+
     Track Name
     Track Name
     ...
@@ -96,6 +98,7 @@ else
       cleanup
       exit
     fi
+    tmpcue=1
   else
     # Save CUE
     echo "Saving CUE sheet to \"$savecue\""
@@ -144,7 +147,7 @@ else
       echo "    TITLE \"$track\"" >> "$cue"
       echo "    PERFORMER \"$performer\"" >> "$cue"
     fi
-    
+
     # Pregap
     if [ $tn -eq 1 ] && [ "$fpregap" -gt 0 ]; then
       pregap="$fpregap"
@@ -163,7 +166,7 @@ else
 
     # Index
     echo "    INDEX 01 00:00:00" >> "$cue"
-    
+
     tn=$(( $tn + 1 ))
     cl=$(( $cl + 1 ))
   done
@@ -189,4 +192,3 @@ eval cdrdao write --device $drive $cdrdao_opts "$cue"
 trap - INT
 
 cleanup
-
